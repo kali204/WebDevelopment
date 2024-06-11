@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgb(0, 0, 0, 0.1);
+        }
+
+        form {
+            width: 300px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        small {
+            color: red;
+            visibility: hidden;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #4cae4c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <form id="registrationForm">
+            <h2>Register</h2>
+            <div class="form-group">
+                <label for="username">UserName</label>
+                <input type="text" name="username" id="username" required>
+                <small>Error message</small>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+                <small>Error message</small>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <small>Error message</small>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <small>Error message</small>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <script>
+        // scripts.js
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('registrationForm');
+    const username = document.getElementById('username');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        validateInputs();
+    });
+
+    function validateInputs() {
+        const usernameValue = username.value.trim();
+        const emailValue = email.value.trim();
+        const passwordValue = password.value.trim();
+        const confirmPasswordValue = confirmPassword.value.trim();
+
+        if (usernameValue === '') {
+            setError(username, 'Username is required');
+        } else {
+            setSuccess(username);
+        }
+
+        if (emailValue === '') {
+            setError(email, 'Email is required');
+        } else if (!isValidEmail(emailValue)) {
+            setError(email, 'Email is not valid');
+        } else {
+            setSuccess(email);
+        }
+
+        if (passwordValue === '') {
+            setError(password, 'Password is required');
+        } else {
+            setSuccess(password);
+        }
+
+        if (confirmPasswordValue === '') {
+            setError(confirmPassword, 'Please confirm your password');
+        } else if (passwordValue !== confirmPasswordValue) {
+            setError(confirmPassword, 'Passwords do not match');
+        } else {
+            setSuccess(confirmPassword);
+        }
+    }
+
+    function setError(input, message) {
+        const formGroup = input.parentElement;
+        const small = formGroup.querySelector('small');
+        small.innerText = message;
+        small.style.visibility = 'visible';
+    }
+
+    function setSuccess(input) {
+        const formGroup = input.parentElement;
+        const small = formGroup.querySelector('small');
+        small.style.visibility = 'hidden';
+    }
+
+    function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+});
+
+
+       
+    </script>
+</body>
+
+</html>
